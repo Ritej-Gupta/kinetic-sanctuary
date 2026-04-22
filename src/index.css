@@ -1,0 +1,265 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Manrope', system-ui, sans-serif;
+
+  /* ── Surface Hierarchy ── */
+  --color-surface: #0d1416;
+  --color-surface-container-lowest: #080f11;
+  --color-surface-container-low: #161d1f;
+  --color-surface-container: #1a2123;
+  --color-surface-container-high: #242b2d;
+  --color-surface-container-highest: #2f3638;
+  --color-surface-dim: #0d1416;
+  --color-surface-bright: #333a3d;
+  --color-surface-variant: #2f3638;
+
+  /* ── Text ── */
+  --color-on-surface: #dde4e6;
+  --color-on-surface-variant: #bec8c9;
+  --color-on-surface-dim: #889393;
+  --color-outline: #889393;
+  --color-outline-variant: #3f4949;
+
+  /* ── Accents ── */
+  --color-primary: #75d5e2;
+  --color-primary-container: #006069;
+  --color-on-primary: #001f23;
+  --color-secondary: #96ccff;
+  --color-secondary-container: #2b97e1;
+  --color-tertiary: #7ddc7a;
+  --color-tertiary-container: #006519;
+  --color-error: #ffb4ab;
+
+  /* ── Achievement Spectrum (NEW) ── */
+  --color-legendary: #f0c060;
+
+  /* ── Ambient Shadows (tinted — NO black) ── */
+  --shadow-ambient: 0 8px 32px -4px rgba(221, 228, 230, 0.06);
+  --shadow-float: 0 16px 48px -8px rgba(221, 228, 230, 0.08);
+
+  /* ── Glow Shadows (NEW) ── */
+  --shadow-glow-primary: 0 0 24px rgba(117, 213, 226, 0.20);
+  --shadow-glow-tertiary: 0 0 16px rgba(125, 220, 122, 0.18);
+  --shadow-glow-legendary: 0 0 20px rgba(240, 192, 96, 0.25);
+
+  /* ── Motion (NEW tokens from §5) ── */
+  --motion-instant: 80ms;
+  --motion-fast: 150ms;
+  --motion-standard: 250ms;
+  --motion-expressive: 400ms;
+  --motion-dramatic: 600ms;
+  --easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --easing-expressive: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --easing-dramatic: cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+/* ── Light Theme Override ── */
+html.light {
+  --color-surface: #f4f6f7;
+  --color-surface-container-lowest: #eef0f1;
+  --color-surface-container-low: #e8eaeb;
+  --color-surface-container: #dfe1e2;
+  --color-surface-container-high: #d4d7d8;
+  --color-surface-container-highest: #c8cbcc;
+  --color-surface-bright: #cdd0d1;
+  --color-surface-variant: #c8cbcc;
+  --color-on-surface: #0d1416;
+  --color-on-surface-variant: #2a3335;
+  --color-on-surface-dim: #5a6669;
+  --color-primary: #006069;
+  --color-primary-container: #75d5e2;
+  --color-secondary: #1a56b0;
+  --color-tertiary: #1a7a1a;
+  --color-error: #b3261e;
+}
+
+/* ── Reduced Motion (§9 Accessibility) ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 80ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 80ms !important;
+    transform: none !important;
+  }
+}
+
+/* ── Theme color transitions (background/color only) ── */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+  transition-duration: 300ms;
+  transition-timing-function: ease;
+}
+
+@layer base {
+  body {
+    @apply bg-surface text-on-surface font-sans antialiased;
+    line-height: 1.5;
+  }
+  h1, h2, h3, h4, h5, h6 { @apply font-serif tracking-tight; }
+}
+
+/* ── Buttons per §6.1 ── */
+@utility btn-primary {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-container) 100%);
+  border-radius: 0.75rem;
+  color: var(--color-on-primary);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  padding: 0.75rem 1.5rem;
+  box-shadow: var(--shadow-glow-primary);
+  border: none;
+  cursor: pointer;
+  transition: transform var(--motion-fast) ease-out, box-shadow var(--motion-fast) ease-out;
+
+  &:hover  { transform: translateY(-1px); box-shadow: 0 0 32px rgba(117,213,226,0.28); }
+  &:active { transform: translateY(0); box-shadow: var(--shadow-glow-primary); }
+}
+
+@utility btn-secondary {
+  background: var(--color-surface-container-high);
+  color: var(--color-primary);
+  border-radius: 0.75rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--motion-fast) ease-out;
+
+  &:hover { background: var(--color-surface-bright); }
+}
+
+@utility btn-tertiary {
+  background: transparent;
+  color: var(--color-primary);
+  border-radius: 0.75rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--motion-fast) ease-out;
+
+  &:hover { background: rgba(117, 213, 226, 0.06); }
+}
+
+/* ── Glassmorphism (§6.9) ── */
+@utility glass {
+  background: rgba(13, 20, 22, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+@utility glass-modal {
+  background: rgba(47, 54, 56, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-float);
+}
+
+/* ── Ghost border (§2, "No-Line Rule") ── */
+@utility ghost-border {
+  border: 1px solid rgba(63, 73, 73, 0.15);
+}
+
+/* ── Glow utilities ── */
+@utility glow-primary { box-shadow: var(--shadow-glow-primary); }
+@utility glow-tertiary { box-shadow: var(--shadow-glow-tertiary); }
+@utility glow-legendary { box-shadow: var(--shadow-glow-legendary); }
+
+/* ── Shimmer skeleton ── */
+@keyframes shimmer {
+  0%   { background-position: -800px 0; }
+  100% { background-position:  800px 0; }
+}
+@utility animate-shimmer {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(to right,
+    var(--color-surface-container) 8%,
+    var(--color-surface-container-high) 18%,
+    var(--color-surface-container) 33%
+  );
+  background-size: 800px 104px;
+}
+
+/* ── Habit check-in glow pulse (§5 Signature Animations) ── */
+@keyframes glow-pulse-tertiary {
+  0%   { box-shadow: var(--shadow-glow-tertiary); }
+  50%  { box-shadow: 0 0 28px rgba(125, 220, 122, 0.35); }
+  100% { box-shadow: none; }
+}
+@utility animate-checkin-glow {
+  animation: glow-pulse-tertiary 400ms var(--easing-expressive) forwards;
+}
+
+/* ── Stat card breathe (§7.8 Quiet Win) ── */
+@keyframes card-breathe {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.02); }
+}
+@utility animate-card-breathe {
+  animation: card-breathe 800ms ease-in-out 2;
+}
+
+/* ── Legendary number flash ── */
+@keyframes legendary-flash {
+  0%   { color: var(--color-primary); }
+  20%  { color: var(--color-legendary); }
+  80%  { color: var(--color-legendary); }
+  100% { color: var(--color-primary); }
+}
+
+/* ── Heatmap — Achievement Spectrum (§6.6) ── */
+.react-calendar-heatmap { @apply w-full text-center; }
+.react-calendar-heatmap text { font-size: 10px; fill: var(--color-on-surface-variant); font-family: 'Inter', sans-serif; }
+
+.react-calendar-heatmap .color-empty   { fill: #1a2123; }                           /* inactive */
+.react-calendar-heatmap .color-scale-1 { fill: #2b6e76; }                           /* partial */
+.react-calendar-heatmap .color-scale-2 { fill: var(--color-primary); opacity: 0.7; }/* consistent */
+.react-calendar-heatmap .color-scale-3 { fill: var(--color-tertiary); }             /* exceptional */
+.react-calendar-heatmap .color-scale-4 { fill: var(--color-legendary); }            /* legendary */
+
+.heatmap-cell { transition: fill var(--motion-fast) ease-out; }
+.heatmap-cell:hover { opacity: 0.85; transform: scale(1.2); }
+
+/* ── §7.9 Focus Mode ── */
+.focus-mode-active .bg-surface {
+  background-color: #0b1011;
+  transition: background-color 1.5s ease;
+}
+
+.focus-mode-active aside, 
+.focus-mode-active .bg-surface-container-low:not(.order-0) {
+  opacity: 0.6;
+  filter: grayscale(0.2);
+  transition: all 1.2s ease;
+}
+
+.focus-mode-active .order-0,
+.focus-mode-active aside > :last-child {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: scale(1.02);
+  z-index: 10;
+}
+
+/* ── Progress rings (§6.7) ── */
+.ring-bg    { fill: none; stroke: var(--color-surface-container-highest); stroke-width: 4px; }
+.ring-track { fill: none; stroke-width: 4px; stroke-linecap: round; transform: rotate(-90deg); transform-origin: center; transition: stroke-dashoffset var(--motion-expressive) var(--easing-expressive); }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--color-surface); }
+::-webkit-scrollbar-thumb { background: var(--color-surface-container-high); border-radius: 9999px; }
+
+/* ── Selection ── */
+::selection { background-color: rgba(117,213,226,0.18); color: var(--color-primary); }
+
+/* ── Focus visible (§9) ── */
+:focus-visible { outline: 2px solid rgba(117,213,226,0.8); outline-offset: 2px; }
